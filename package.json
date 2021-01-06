@@ -4,23 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest --no-watchman"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged",
-      "pre-push": "yarn run type-check"
-    }
-  },
-  "lint-staged": {
-    "*.@(ts|tsx)": [
-      "yarn lint",
-      "yarn format"
-    ]
-  },
   "devDependencies": {
     "@types/jest": "^26.0.19",
     "@types/node": "^14.14.20",
