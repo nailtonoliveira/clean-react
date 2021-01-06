@@ -6,7 +6,7 @@
   "scripts": {
     "test": "jest --no-watchman --passWithNoTests",
     "test:watch": "npm test -- --watch",
-    "test:staged": "npm test -- --finRelatedTests",
+    "test:staged": "npm test -- --findRelatedTests",
     "test:ci": "jest -- --coverage"
   },
   "keywords": [],
