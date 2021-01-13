@@ -1,4 +1,5 @@
 [![Build Status](https://travis-ci.com/nailtonoliveira/clean-react.svg?branch=main)](https://travis-ci.com/nailtonoliveira/clean-react)
+[![Coverage Status](https://coveralls.io/repos/github/nailtonoliveira/clean-react/badge.svg?branch=1.2.0)](https://coveralls.io/github/nailtonoliveira/clean-react?branch=1.2.0)
 [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com)
 [![GPLv3 License](https://img.shields.io/badge/License-GPL%20v3-yellow.svg)](https://opensource.org/licenses/)
 [![Open Source](https://badges.frapsoft.com/os/v1/open-source.svg?v=103)](https://opensource.org/)
