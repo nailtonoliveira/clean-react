@@ -1,7 +1,7 @@
 import { RemoteAuthentication } from './remote-authentication'
 import { HttpPostClientSpy } from '@/data/test'
 import { HttpStatusCode } from '@/data/protocols/http'
-import { mockAaccountModel, mockAuthentication } from '@/domain/test'
+import { mockAccountModel, mockAuthentication } from '@/domain/test'
 import { InvalidCredentialsError, UnexpectedError } from '@/domain/errors'
 import { AuthenticationParams } from '@/domain/usecases'
 import { AccountModel } from '@/domain/models'
@@ -75,7 +75,7 @@ describe('RemoteAuthentication', () => {
 
   test('Should return an AccountModel if HttpPostClient resturns 200', async () => {
     const { sut, httpPostClientSpy } = makeSut()
-    const httpResult = mockAaccountModel()
+    const httpResult = mockAccountModel()
     httpPostClientSpy.response = {
       statusCode: HttpStatusCode.ok,
       body: httpResult

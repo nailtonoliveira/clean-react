@@ -1,9 +1,9 @@
 import { AccountModel } from '@/domain/models'
-import { mockAaccountModel } from '@/domain/test'
+import { mockAccountModel } from '@/domain/test'
 import { Authentication, AuthenticationParams } from '@/domain/usecases'
 
 export class AuthenticationSpy implements Authentication {
-  account = mockAaccountModel()
+  account = mockAccountModel()
   params: AuthenticationParams
   callsCount = 0
 
