@@ -7,6 +7,6 @@ export const mockAuthentication = (): AuthenticationParams => ({
   password: faker.internet.password()
 })
 
-export const mockAaccountModel = (): AccountModel => ({
+export const mockAccountModel = (): AccountModel => ({
   accessToken: faker.random.uuid()
 })

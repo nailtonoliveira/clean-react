@@ -1,55 +1,62 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link, useHistory } from 'react-router-dom'
 
-import Styles from './login-styles.scss'
+import Styles from './signup-styles.scss'
 import { FormStatus, LoginHeader, Footer, Input, SubmitButton } from '@/presentation/components'
 import Context from '@/presentation/contexts/form/form-context'
 import { Validation } from '@/presentation/protocols/validation'
-import { Authentication, SaveAccessToken } from '@/domain/usecases'
+import { AddAccount, SaveAccessToken } from '@/domain/usecases'
 
 type Props = {
   validation: Validation
-  authentication: Authentication
+  addAccount: AddAccount
   saveAccessToken: SaveAccessToken
 }
 
-const Login: React.FC<Props> = ({ validation, authentication, saveAccessToken }: Props) => {
+const Signup: React.FC<Props> = ({ validation, addAccount, saveAccessToken }: Props) => {
   const history = useHistory()
   const [state, setState] = useState({
     isLoading: false,
     isFormInvalid: true,
+    name: '',
     email: '',
     password: '',
+    passwordConfirmation: '',
+    nameError: '',
     emailError: '',
     passwordError: '',
+    passwordConfirmationError: '',
     mainError: ''
   })
 
   useEffect(() => {
-    const { email, password } = state
-    const formData = { email, password }
+    const { name, email, password, passwordConfirmation } = state
+    const formData = { name, email, password, passwordConfirmation }
+    const nameError = validation.validate('name', formData)
     const emailError = validation.validate('email', formData)
     const passwordError = validation.validate('password', formData)
+    const passwordConfirmationError = validation.validate('passwordConfirmation', formData)
 
-    setState(oldState => ({
-      ...oldState,
+    setState({
+      ...state,
+      nameError,
       emailError,
       passwordError,
-      isFormInvalid: !!emailError || !!passwordError
-    }))
-  }, [state.email, state.password])
+      passwordConfirmationError,
+      isFormInvalid: !!nameError || !!emailError || !!passwordError || !!passwordConfirmationError
+    })
+  }, [state.name, state.email, state.password, state.passwordConfirmation])
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>): Promise<void> => {
     event.preventDefault()
     if (state.isLoading || state.isFormInvalid) { return }
     try {
-      setState(oldState => ({
-        ...oldState,
-        isLoading: true
-      }))
-      const account = await authentication.auth({
+      setState(oldState => ({ ...oldState, isLoading: true }))
+      const account = await addAccount.add({
+        name: state.name,
         email: state.email,
-        password: state.password
+        password: state.password,
+        passwordConfirmation: state.passwordConfirmation
       })
       await saveAccessToken.save(account.accessToken)
       history.replace('/')
@@ -63,18 +70,19 @@ const Login: React.FC<Props> = ({ validation, authentication, saveAccessToken }:
   }
 
   return (
-    <div className={Styles.login}>
+    <div className={Styles.signup}>
       <LoginHeader />
       <Context.Provider value={{ state, setState }}>
         <form data-testid="form" className={Styles.form} onSubmit={handleSubmit}>
-          <h2>Login</h2>
+          <h2>Criar Conta</h2>
 
+          <Input type="text" name="name" placeholder="Digite seu nome"/>
           <Input type="email" name="email" placeholder="Digite seu e-mail"/>
-
           <Input type="password" name="password" placeholder="Digite sua senha" />
+          <Input type="password" name="passwordConfirmation" placeholder="Digite sua senha" />
 
-          <SubmitButton text="Entrar" />
-          <Link data-testid="signup-link" to="/signup" className={Styles.link}>Criar conta</Link>
+          <SubmitButton text="Cadastrar" />
+          <Link data-testid="login-link" replace to="/login" className={Styles.link}>Voltar para Login</Link>
           <FormStatus />
         </form>
       </Context.Provider>
@@ -83,4 +91,4 @@ const Login: React.FC<Props> = ({ validation, authentication, saveAccessToken }:
   )
 }
 
-export default Login
+export default Signup

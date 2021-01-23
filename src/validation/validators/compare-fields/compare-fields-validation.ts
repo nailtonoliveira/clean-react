@@ -1,13 +1,13 @@
 import { InvalidFieldError } from '@/validation/errors'
 import { FieldValidation } from '@/validation/protocols/field-validation'
 
-export class MinLengthValidation implements FieldValidation {
+export class CompareFieldsValidation implements FieldValidation {
   constructor (
     readonly field: string,
-    private readonly minLength: number
+    private readonly fieldToCompare: string
   ) {}
 
   validate (input: object): Error {
-    return input[this.field]?.length < this.minLength ? new InvalidFieldError() : null
+    return input[this.field] !== input[this.fieldToCompare] ? new InvalidFieldError() : null
   }
 }
