@@ -5,6 +5,7 @@ const baseUrl: string = Cypress.config().baseUrl
 describe('Login', () => {
   beforeEach(() => {
     cy.visit('login')
+    cy.server()
   })
 
   it('Should load with correct initial state', () => {
@@ -46,7 +47,15 @@ describe('Login', () => {
     cy.getByTestId('error-wrap').should('not.have.descendants')
   })
 
-  it('Should present error if invalid credentials are provided', () => {
+  it('Should present InvalidCredentialsError on 401', () => {
+    cy.route({
+      method: 'post',
+      url: /login/,
+      status: 401,
+      response: {
+        error: faker.random.words()
+      }
+    })
     cy.getByTestId('email').focus().type(faker.internet.email())
     cy.getByTestId('password').focus().type(faker.random.alphaNumeric(5))
     cy.getByTestId('submit').click()
@@ -59,6 +68,14 @@ describe('Login', () => {
   })
 
   it('Should save accessToken if valid credentials are provided', () => {
+    cy.route({
+      method: 'post',
+      url: /login/,
+      status: 200,
+      response: {
+        accessToken: faker.random.uuid()
+      }
+    })
     cy.getByTestId('email').focus().type('mango@gmail.com')
     cy.getByTestId('password').focus().type('12345')
     cy.getByTestId('submit').click()
