@@ -66,7 +66,7 @@ describe('AxiosHttpClient', () => {
       })
     })
 
-    test('Should return correct error axios.post', () => {
+    test('Should return correct error axios.get', () => {
       const { sut, mockedAxios } = makeSut()
       mockedAxios.get.mockRejectedValueOnce({
         response: mockHttpResponse()
