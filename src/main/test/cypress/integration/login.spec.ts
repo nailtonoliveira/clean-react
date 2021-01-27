@@ -71,11 +71,11 @@ describe('Login', () => {
     FormHelper.testUrl('login')
   })
 
-  it('Should save accessToken if valid credentials are provided', () => {
+  it('Should save account if valid credentials are provided', () => {
     Http.mockOk()
     simulateValidSubmit()
     cy.getByTestId('error-wrap').should('not.have.descendants')
-    FormHelper.testLocalStorageItem('accessToken')
+    FormHelper.testLocalStorageItem('account')
     FormHelper.testUrl('')
   })
 
