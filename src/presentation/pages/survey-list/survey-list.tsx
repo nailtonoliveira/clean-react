@@ -3,7 +3,6 @@ import Styles from './survey-list-styles.scss'
 import { Footer, Header } from '@/presentation/components'
 import { Error, SurveyContext, SurveyListItem } from '@/presentation/pages/survey-list/components'
 import { LoadSurveyList } from '@/domain/usecases'
-import { SurveyModel } from '@/domain/models'
 
 type Props = {
   loadSurveyList: LoadSurveyList
@@ -11,7 +10,7 @@ type Props = {
 
 const SurveyList = ({ loadSurveyList }: Props): JSX.Element => {
   const [state, setState] = useState({
-    surveys: [] as SurveyModel[],
+    surveys: [] as LoadSurveyList.Model[],
     error: '',
     reload: false
   })
