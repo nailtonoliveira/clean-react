@@ -1,19 +1,20 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Styles from './survey-list-styles.scss'
 import { Footer, Header } from '@/presentation/components'
 import { Error, SurveyContext, SurveyListItem } from '@/presentation/pages/survey-list/components'
 import { LoadSurveyList } from '@/domain/usecases'
-import { AccessDeniedError } from '@/domain/errors'
-import { ApiContext } from '@/presentation/contexts'
-import { useHistory } from 'react-router-dom'
+import { useErrorHandler } from '@/presentation/hooks'
 
 type Props = {
   loadSurveyList: LoadSurveyList
 }
 
 const SurveyList = ({ loadSurveyList }: Props): JSX.Element => {
-  const history = useHistory()
-  const { setCurrentAccount } = useContext(ApiContext)
+  const handleError = useErrorHandler(
+    (error: Error) => {
+      setState(oldState => ({ ...oldState, error: error.message }))
+    }
+  )
   const [state, setState] = useState({
     surveys: [] as LoadSurveyList.Model[],
     error: '',
@@ -22,14 +23,7 @@ const SurveyList = ({ loadSurveyList }: Props): JSX.Element => {
   useEffect(() => {
     loadSurveyList.loadAll()
       .then(surveys => setState(oldState => ({ ...oldState, surveys })))
-      .catch(error => {
-        if (error instanceof AccessDeniedError) {
-          setCurrentAccount(undefined)
-          history.replace('/login')
-        } else {
-          setState(oldState => ({ ...oldState, error: error.message }))
-        }
-      })
+      .catch(handleError)
   }, [state.reload])
 
   return (
