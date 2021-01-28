@@ -12,13 +12,14 @@ type Props = {
 const SurveyList = ({ loadSurveyList }: Props): JSX.Element => {
   const [state, setState] = useState({
     surveys: [] as SurveyModel[],
-    error: ''
+    error: '',
+    reload: false
   })
   useEffect(() => {
     loadSurveyList.loadAll()
       .then(surveys => setState(oldState => ({ ...oldState, surveys })))
       .catch(error => setState(oldState => ({ ...oldState, error: error.message })))
-  }, [])
+  }, [state.reload])
 
   return (
     <div className={Styles.surveyListWrap}>
