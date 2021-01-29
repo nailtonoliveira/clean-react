@@ -25,6 +25,7 @@ module.exports = merge(common, {
       exclude: /node_modules/
     }]
   },
+  devtool: 'inline-source-map',
   devServer: {
     contentBase: './public',
     writeToDisk: true,
