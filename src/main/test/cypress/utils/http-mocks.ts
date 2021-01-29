@@ -36,7 +36,7 @@ export const mockServerError = (url: RegExp, method: string): void => {
   }).as('request')
 }
 
-export const mockOk = (url: RegExp, method: string, response: object): void => {
+export const mockOk = (url: RegExp, method: string, response: any): void => {
   cy.server()
   cy.route({
     method,
