@@ -1,0 +1,14 @@
+[
+  {
+    "id": "any_id00",
+    "question": "Question 00",
+    "date": "2020-01-23T00:00:00",
+    "didAnswer": false
+  },
+  {
+    "id": "any_id01",
+    "question": "Question 01",
+    "date": "2019-04-24T00:00:00",
+    "didAnswer": true
+  }
+]
