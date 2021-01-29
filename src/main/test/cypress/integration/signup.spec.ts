@@ -95,6 +95,7 @@ describe('Signup', () => {
   it('Should save account if valid credentials are provided', () => {
     mockSuccess()
     simulateValidSubmit()
+    cy.wait('@request')
     cy.getByTestId('error-wrap').should('not.have.descendants')
     Helpers.testLocalStorageItem('account')
     Helpers.testUrl('')
